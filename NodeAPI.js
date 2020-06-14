@@ -2,18 +2,10 @@
 var http = require("https"),aws4 = require("aws4"),express = require("express"),fs = require("fs"),colors = require("colors"),compression = require('compression');
 //All of the required dependancies are listed ^
 
-var title = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-┃ AWSSigning Api v-0.5|Status: Active ┃
-┃                                     ┃
-┃   Server Running at 127.0.0.1:8080  ┃
-┃                                     ┃
-┃        Made with <3 By Pure         ┃
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-`;
+var title = `Aws4 Signing API | Server Started at 127.0.0.1:8080`;
 //This Starts the Express Server
 var app = express();
 app.use(compression());
-app.setMaxListeners(0);
 app.listen(8080, () => {
   process.stdout.write(String.fromCharCode(27) +"]0;" +"AWSSigning API v-0.5 | Status: Active" +String.fromCharCode(7));
   //Prints the Title
@@ -27,14 +19,13 @@ app.get("/", (req, res, next) => {
 
 var TotalRequests = 0;
 //AWS Signing with multiple arguments being passed
-app.post("/AWSSign", (req, res, next) => {
+app.get("/AWSSign", (req, res, next) => {
     try {
-
       //This Parses all of the headers that are used to control the API
       var awshost = req.headers['awshost'], awspath = req.headers['awspath'],awsreqion = req.headers['awsregion'],awscredential = req.headers['awscredential'],awskey = req.headers['awskey'],awssecretkey = req.headers['awssecretkey'],awssession = req.headers['awssession'],awshttpmethod = req.headers['awshttpmethod'],awsbody = req.headers['awsbody'],awsheaders = req.headers['awsheaders'];
-
       //This Function is what signs the headers. Its housed inside of this function so it has access to the Req, res function.
       async function GenerateHeaders(host,path,region,credential,accesskey,secretkey,sessiontoken,httpmethod,bodycontent,customheaders) {
+        //Creates all Vars used in signing. Parsed from request
         var Host = await host,Path = await path,Region = await region,Credential = await credential,AccessKeyID = await accesskey,SecretKeyID = await secretkey,SessionToken = await sessiontoken,HttpMethod = await httpmethod,BodyData = await bodycontent,CustomHeaders = await customheaders;
         //Returns if the Headers are changed or default
         if(CustomHeaders.length > 0){
@@ -46,12 +37,12 @@ app.post("/AWSSign", (req, res, next) => {
         }
         else{CustomHeader = "Using Default Headers";}
         //Session tokens are very long and would fill entire CMD Box. This simplifies it.
-        if (SessionToken.length > 0)
-        {
+        if (SessionToken.length > 0){
           var SessionCheck = "Session Token Retrieved";
         }
-        else
-        {SessionCheck = "No Token Sent";}
+        else{
+          SessionCheck = "No Token Sent";
+      }
 
         //Returns if the Body is changed or default
         if(BodyData.length > 0){
@@ -76,7 +67,9 @@ app.post("/AWSSign", (req, res, next) => {
 
       //The function that does the magic. (All arguments follow same pattern. ex: aws<functionality>)
       GenerateHeaders(awshost,awspath,awsreqion,awscredential,awskey,awssecretkey,awssession,awshttpmethod,awsbody,awsheaders);
-      TotalRequests = TotalRequests + 1;} 
+      TotalRequests = TotalRequests + 1;
+    } 
+      //Catches any fatal errors and returns Error Code.
       catch (err) { // Some simple error handling
         res.statusCode = 400;
         res.send("Error Signing AWS Request. Error Message:" + err);
