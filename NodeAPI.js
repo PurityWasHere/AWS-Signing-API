@@ -31,30 +31,11 @@ app.post("/AWSSign", (req, res, next) => {
     try {
 
       //This Parses all of the headers that are used to control the API
-      var awshost = req.headers['awshost'];
-      var awspath = req.headers['awspath'];
-      var awsreqion = req.headers['awsregion'];
-      var awscredential = req.headers['awscredential'];
-      var awskey = req.headers['awskey']; 
-      var awssecretkey = req.headers['awssecretkey'];
-      var awssession = req.headers['awssession'];
-      var awshttpmethod = req.headers['awshttpmethod'];
-      var awsbody = req.headers['awsbody']
-      var awsheaders = req.headers['awsheaders'];
+      var awshost = req.headers['awshost'], awspath = req.headers['awspath'],awsreqion = req.headers['awsregion'],awscredential = req.headers['awscredential'],awskey = req.headers['awskey'],awssecretkey = req.headers['awssecretkey'],awssession = req.headers['awssession'],awshttpmethod = req.headers['awshttpmethod'],awsbody = req.headers['awsbody'],awsheaders = req.headers['awsheaders'];
 
       //This Function is what signs the headers. Its housed inside of this function so it has access to the Req, res function.
       async function GenerateHeaders(host,path,region,credential,accesskey,secretkey,sessiontoken,httpmethod,bodycontent,customheaders) {
-        Host = await host;
-        Path = await path;
-        Region = await region;
-        Credential = await credential;
-        AccessKeyID = await accesskey;
-        SecretKeyID = await secretkey;
-        SessionToken = await sessiontoken;
-        HttpMethod = await httpmethod;
-        BodyData = await bodycontent;
-        CustomHeaders = await customheaders;
-
+        var Host = await host,Path = await path,Region = await region,Credential = await credential,AccessKeyID = await accesskey,SecretKeyID = await secretkey,SessionToken = await sessiontoken,HttpMethod = await httpmethod,BodyData = await bodycontent,CustomHeaders = await customheaders;
         //Returns if the Headers are changed or default
         if(CustomHeaders.length > 0){
           var CustomHeader = "Using Custom Headers";
