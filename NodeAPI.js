@@ -63,18 +63,14 @@ app.post("/AWSSign", (req, res, next) => {
             }
             catch{console.error(colors.red("Error Parsing Headers. Did you supply it in proper Json? "))}
         }
-        else{
-          var CustomHeader = "Using Default Headers";
-        }
+        else{CustomHeader = "Using Default Headers";}
         //Session tokens are very long and would fill entire CMD Box. This simplifies it.
         if (SessionToken.length > 0)
         {
           var SessionCheck = "Session Token Retrieved";
         }
         else
-        {
-          var SessionCheck = "No Token Sent";
-        }
+        {SessionCheck = "No Token Sent";}
 
         //Returns if the Body is changed or default
         if(BodyData.length > 0){
@@ -83,8 +79,7 @@ app.post("/AWSSign", (req, res, next) => {
         }
         else{
         var opts =  {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,headers:headers};
-        var usebody = "Not Using Body Data"
-        }
+        usebody = "Not Using Body Data"};
 
         //Logs data retrieved for Debug and evaluation
         console.log(colors.yellow("Recieved Data: "+ HttpMethod+' | '+ Host+' | '+Path+' | '+Region+' | '+Credential+' | '+AccessKeyID+' | '+SecretKeyID+' |'+'\n' +CustomHeader+' | '+usebody+' | '+SessionCheck+'\n'+colors.magenta("Attempting to sign values...")))
@@ -100,12 +95,10 @@ app.post("/AWSSign", (req, res, next) => {
 
       //The function that does the magic. (All arguments follow same pattern. ex: aws<functionality>)
       GenerateHeaders(awshost,awspath,awsreqion,awscredential,awskey,awssecretkey,awssession,awshttpmethod,awsbody,awsheaders);
-      TotalRequests = TotalRequests + 1;
-
-    } catch (err) { // Some simple error handling
-        res.statusCode = 400
+      TotalRequests = TotalRequests + 1;} 
+      catch (err) { // Some simple error handling
+        res.statusCode = 400;
         res.send("Error Signing AWS Request. Error Message:" + err);
         console.log("Error Signing AWS Request.");
-        console.log(err)
-    }
+        console.log(err);}
 });
