@@ -78,7 +78,7 @@ app.post("/AWSSign", (req, res, next) => {
         var usebody = "Using Body Data"
         }
         else{
-        var opts =  {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,headers:headers};
+        opts =  {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,headers:headers};
         usebody = "Not Using Body Data"};
 
         //Logs data retrieved for Debug and evaluation
