@@ -60,14 +60,14 @@ app.post("/AWSSign", (req, res, next) => {
         var CustomHeader;
         //Returns if the Headers are changed or default
         if(CustomHeaders.length > 0){
-          var CustomHeader = "Using Custom Headers"
+          CustomHeader = "Using Custom Headers"
           try{
             var headers = await JSON.parse(CustomHeaders)
             }
             catch{console.error(colors.red("Error Parsing Headers. Did you supply it in proper Json? "))}
         }
         else{
-          var CustomHeader = "Using Default Headers"
+          CustomHeader = "Using Default Headers"
         }
         //Session tokens are very long and would fill entire CMD Box. This simplifies it.
         if (SessionToken.length > 0)
@@ -81,11 +81,11 @@ app.post("/AWSSign", (req, res, next) => {
 
         //Returns if the Body is changed or default
         if(BodyData.length > 0){
-        var opts = {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,body:BodyData ,headers:headers};
+          var opts = {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,body:BodyData ,headers:headers};
         usebody = "Using Body Data"
         }
         else{
-        var opts =  {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,headers:headers};
+          opts =  {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,headers:headers};
         usebody = "Not Using Body Data"
         }
 
