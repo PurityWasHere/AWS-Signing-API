@@ -2,7 +2,7 @@
 var http = require("https"),aws4 = require("aws4"),express = require("express"),fs = require("fs"),colors = require("colors"),compression = require('compression');
 //All of the required dependancies are listed ^
 
-var title = `Aws4 Signing API | Server Started at 127.0.0.1:8080`;
+var title = `Aws4 Signing API | Server Started at 127.0.0.1:8080\n`;
 //This Starts the Express Server
 var app = express();
 app.use(compression());
