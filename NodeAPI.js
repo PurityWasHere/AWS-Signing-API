@@ -52,41 +52,38 @@ app.post("/AWSSign", (req, res, next) => {
         SecretKeyID = await secretkey;
         SessionToken = await sessiontoken;
         HttpMethod = await httpmethod;
-        BodyData = await bodycontent
-        CustomHeaders = await customheaders
+        BodyData = await bodycontent;
+        CustomHeaders = await customheaders;
 
-        var SessionCheck;
-        var usebody;
-        var CustomHeader;
         //Returns if the Headers are changed or default
         if(CustomHeaders.length > 0){
-          CustomHeader = "Using Custom Headers"
+          var CustomHeader = "Using Custom Headers";
           try{
-            var headers = await JSON.parse(CustomHeaders)
+            var headers = await JSON.parse(CustomHeaders);
             }
             catch{console.error(colors.red("Error Parsing Headers. Did you supply it in proper Json? "))}
         }
         else{
-          CustomHeader = "Using Default Headers"
+          var CustomHeader = "Using Default Headers";
         }
         //Session tokens are very long and would fill entire CMD Box. This simplifies it.
         if (SessionToken.length > 0)
         {
-          SessionCheck = "Session Token Retrieved"
+          var SessionCheck = "Session Token Retrieved";
         }
         else
         {
-          SessionCheck = "No Token Sent"
+          var SessionCheck = "No Token Sent";
         }
 
         //Returns if the Body is changed or default
         if(BodyData.length > 0){
-          var opts = {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,body:BodyData ,headers:headers};
-        usebody = "Using Body Data"
+        var opts = {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,body:BodyData ,headers:headers};
+        var usebody = "Using Body Data"
         }
         else{
-          opts =  {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,headers:headers};
-        usebody = "Not Using Body Data"
+        var opts =  {host: Host,path: Path,region: Region,credential: Credential, method: HttpMethod,headers:headers};
+        var usebody = "Not Using Body Data"
         }
 
         //Logs data retrieved for Debug and evaluation
@@ -98,7 +95,7 @@ app.post("/AWSSign", (req, res, next) => {
         //Logs that the process ran correctly
         console.log(colors.green("Successfully signed request from " + req.ip + " | Current Request Number:(" + TotalRequests + ')'))
         //Sends the client the signed data
-        res.send(Complete)
+        res.send(await Complete);
         return;}
 
       //The function that does the magic. (All arguments follow same pattern. ex: aws<functionality>)
