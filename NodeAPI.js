@@ -62,6 +62,7 @@ app.get("/AWSSign", (req, res, next) => {
         //Logs that the process ran correctly
         console.log(colors.green("Successfully signed request from " + req.ip + " | Current Request Number:(" + TotalRequests + ')'))
         //Sends the client the signed data
+        res.status(200);
         res.send(await Complete);
         return;}
 
@@ -71,7 +72,7 @@ app.get("/AWSSign", (req, res, next) => {
     } 
       //Catches any fatal errors and returns Error Code.
       catch (err) { // Some simple error handling
-        res.statusCode = 400;
+        res.sendStatus(500);
         res.send("Error Signing AWS Request. Error Message:" + err);
         console.log("Error Signing AWS Request.");
         console.log(err);}
